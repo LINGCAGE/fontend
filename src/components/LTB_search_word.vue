@@ -17,6 +17,7 @@
   /*搜索单词的函数，点击单词页面的“查找单词”按钮调用*/
   async function search_word()
   {
+    //输入单词
     let inputElement = document.getElementById("top1");
     entry = inputElement.value;
 
@@ -30,13 +31,24 @@
         //没查到
         console.log("没输出");
         cout = ref('<div style="font-size: 16px">没查到哎宝宝</div>');
+        //以下使用element.insertAdjacentHTML
+        let outcome_ = document.getElementById("outcome_");
+        outcome_.innerHTML = ' ';
+        outcome_.insertAdjacentHTML('beforeend', cout.value);
       }
       else
       {
+
+        //----------施工保护区start
         console.log("有输出");
         cout = ref(response);
+        //----------施工保护区end
 
-        console.log(is_menu_visable.value)
+        //以下使用element.insertAdjacentHTML
+        //原生，启动！
+        let outcome_ = document.getElementById("outcome_");
+        outcome_.innerHTML = ' ';
+        outcome_.insertAdjacentHTML('beforeend', cout.value);
       }
     }
     catch (error) {
@@ -61,7 +73,8 @@
 
     <div id="main_bu">
       <div id="outcome">
-        <div v-html="cout"></div>
+        <!--<div v-html="cout"></div>-->
+        <div id="outcome_"></div>
       </div>
       <div></div>
     </div>

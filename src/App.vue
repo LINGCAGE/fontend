@@ -1,28 +1,31 @@
 <script setup>
   import {ref,computed} from "vue";
   import { useRouter } from 'vue-router';
-  const router = useRouter()
 
-  import LTB from "./components/LTB_search_word.vue";
+  import { provide } from 'vue';
+
+  const router = useRouter()
 
   let account = ref("账号");
   //存储账号名称
 
-  let login = false;
+  let login = ref(false);
   //先预设为未登录
 
 
   const is_login_nav = computed(() => {
-    return login ? "#fff" : "#aaaaaa";
+    return login.value ? "#fff" : "#aaaaaa";
   })//控制侧边栏字样的颜色
 
   //路由跳转
   const search_ = () => {
   router.push('/search')
   }
-  const test =() =>{
-    router.push('/test')
+  const log_ =() =>{
+    router.push('/log_')
   }
+
+  provide('fun_login', () => {login.value = true});
 </script>
 
 <template>
@@ -45,7 +48,7 @@
       <div class="nav">
         <div style="height: 200px;"></div><!--最上方留点空格-->
 
-        <div class="nav_" style="color: #fff" @click="test">账号管理</div>
+        <div class="nav_" style="color: #fff" @click="log_">账号管理</div>
         <div class="nav_" style="color: #fff" @click="search_">单词查找</div>
 
         <div :style="{color : is_login_nav}" class="nav_ nav_top">单词本管理</div>
@@ -58,8 +61,8 @@
       </div>
 
       <div id="content" style="z-index: 100;overflow-y: scroll;"><!--主要的内容区，所有的页面内容以组件形式插入到这里-->
+        <!--<LTB_login @do_login_="() => {login = !login}"/>-->
         <router-view></router-view>
-        <!---->
         
       </div>
       

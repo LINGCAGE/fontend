@@ -1,24 +1,62 @@
+<script>//seas：这里改<script setup>
+  import { mapMutations } from "vuex";
+  export default {
+  name: "Login",
+  data: function () {
+    return {
+      loginForm: {
+        account: "",
+        passWord: "",
+      },
+      loginRules: {
+        account: [{ required: true, message: "请输入账号", trigger: "blur" }],
+        passWord: [{ required: true, message: "请输入密码", trigger: "blur" }],
+      },
+    };
+  },
+
+  methods: {
+    ...mapMutations(["changeLogin"]),
+    submitForm() {
+      const userAccount = this.loginForm.account;
+      const userPassword = this.loginForm.passWord;
+      if (!userAccount) {
+        return this.$message({
+          type: "error",
+          message: "账号不能为空！",
+        });
+      }
+      if (!userPassword) {
+        return this.$message({
+          type: "error",
+          message: "密码不能为空！",
+        });
+      }
+      console.log("用户输入的账号为：", userAccount);
+      console.log("用户输入的密码为：", userPassword);
+
+    },
+  },
+};
+</script>
+
 <template>
-    <div class="login">
-      <div class="mylogin" align="center">
-        <h4>登录</h4>
-        <el-form
-          :model="loginForm"
-          :rules="loginRules"
-          ref="loginForm"
-          label-width="0px"
-        >
+  <div class="login">
+    <div class="mylogin" align="center"><!--seas：这里align和center用style="justify-content: center;align-items: center;-->
+      <center>
+        <div id="yonghudenglu">
+          <h1>用户登录</h1>
+        </div>
+      </center>
+      <el-form :model="loginForm" :rules="loginRules" ref="loginForm" label-width="0px">
+        <div class="input">
           <el-form-item label="" prop="account" style="margin-top: 10px">
             <el-row>
               <el-col :span="2">
                 <span class="el-icon-s-custom"></span>
               </el-col>
               <el-col :span="22">
-                <el-input
-                  class="inps"
-                  placeholder="账号"
-                  v-model="loginForm.account"
-                >
+                <el-input class="inps" placeholder="邮箱或ID" v-model="loginForm.account">
                 </el-input>
               </el-col>
             </el-row>
@@ -29,118 +67,111 @@
                 <span class="el-icon-lock"></span>
               </el-col>
               <el-col :span="22">
-                <el-input
-                  class="inps"
-                  type="password"
-                  placeholder="密码"
-                  v-model="loginForm.passWord"
-                ></el-input>
+                <el-input class="inps" type="password" placeholder="密码" v-model="loginForm.passWord"></el-input>
               </el-col>
             </el-row>
           </el-form-item>
-          <el-form-item style="margin-top: 55px">
-            <el-button type="primary" round class="submitBtn" @click="submitForm"
-              >登录
-            </el-button>
-          </el-form-item>
-          <div class="unlogin">
-            <router-link :to="{ path: '/forgetpwd' }"> 忘记密码? </router-link>
-            |
-            <router-link :to="{ path: '/register' }">
-              <a href="register.vue" target="_blank" align="right">注册新账号</a>
-            </router-link>
-          </div>
-        </el-form>
-      </div>
+        </div>
+        <el-form-item style="margin-top: 55px">
+          <el-button type="primary" round class="submitBtn" @click="submitForm"><button id="denglu">登录</button>
+        </el-button>
+      </el-form-item>
+
+        <div class="unlogin">
+          <router-link :to="{ path: '/forgetpwd' }"><button id="wangji">忘记密码</button> </router-link>
+          <router-link :to="{ path: '/register' }">
+            <a href="register.vue" target="_blank" align="right"><button id="zhuce">注册</button></a>
+          </router-link>
+        </div>
+      </el-form>
     </div>
+  </div>
 </template>
+
 <style>
 .login {
-      width: 100vw;
-      padding: 0;
-      margin: 0;
-      height: 100vh;
-      font-size: 16px;
-      background-position: left top;
-      background-color: #242645;
-      color: #fff;
-      font-family: "Source Sans Pro";
-      position: relative;
-  }
- 
-  .mylogin {
-    width: 240px;
-    height: 280px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-    padding: 50px 40px 40px 40px;
-    box-shadow: -15px 15px 15px rgba(6, 17, 47, 0.7);
-    opacity: 1;
-    background: linear-gradient(
-      230deg,
-      rgba(53, 57, 74, 0) 0%,
-      rgb(0, 0, 0) 100%
-    );
-  }
- 
-  .inps input {
-    border: none;
-    color: #fff;
-    background-color: transparent;
-    font-size: 12px;
-  }
- 
-  .submitBtn {
-    background-color: transparent;
-    color: #39f;
-    width: 200px;
-  }
-</style>
+  width: 400px;
+  height: 500px;
+  background-color: #F2ECD9;
+  position: fixed;
+  bottom: 200px;
+  left: 750px;
+  border-radius: 10px;
 
-<script>
-  import { mapMutations } from "vuex";
-   
-  export default {
-    name: "Login",
-    data: function () {
-      return {
-        loginForm: {
-          account: "",
-          passWord: "",
-        },
-        loginRules: {
-          account: [{ required: true, message: "请输入账号", trigger: "blur" }],
-          passWord: [{ required: true, message: "请输入密码", trigger: "blur" }],
-        },
-      };
-    },
-   
-    methods: {
-      ...mapMutations(["changeLogin"]),
-      submitForm() {
-        const userAccount = this.loginForm.account;
-        const userPassword = this.loginForm.passWord;
-        if (!userAccount) {
-          return this.$message({
-            type: "error",
-            message: "账号不能为空！",
-          });
-        }
-        if (!userPassword) {
-          return this.$message({
-            type: "error",
-            message: "密码不能为空！",
-          });
-        }
-        console.log("用户输入的账号为：", userAccount);
-        console.log("用户输入的密码为：", userPassword);
-        
-      },
-    },
-  };
-</script>
-    
+}
+
+#yonghudenglu {
+  color: #000000;
+  position: fixed;
+  top: 250px;
+  left: 890px;
+}
+
+.input {
+  position: fixed;
+  left: 800px;
+  top: 320px;
+
+}
+
+#kuang1 {
+  height: 40px;
+  width: 280px;
+  border-radius: 10px;
+  box-shadow: 3px 2px 10px #000000;
+  background-color: #F2ECD9;
+
+}
+
+#kuang2 {
+  height: 40px;
+  width: 280px;
+  border-radius: 10px;
+  box-shadow: 3px 2px 10px #000000;
+}
+
+#zhuce {
+  color: aliceblue;
+  background-color: #4D3833;
+  position: fixed;
+  left: 800px;
+  top: 500px;
+  height: 40px;
+  width: 120px;
+  border-radius: 10px;
+}
+
+#wangji {
+  color: aliceblue;
+  background-color: #4D3833;
+  position: fixed;
+  left: 960px;
+  top: 500px;
+  height: 40px;
+  width: 120px;
+  border-radius: 10px;
+}
+
+#denglu {
+  color: aliceblue;
+  background-color: #4D3833;
+  position: fixed;
+  left: 800px;
+  top: 580px;
+  height: 40px;
+  width: 280px;
+  border-radius: 10px;
+}
+
+.inps input {
+  border: none;
+  color: #fff;
+  background-color: transparent;
+  font-size: 12px;
+}
+
+.submitBtn {
+  background-color: transparent;
+  color: #39f;
+  width: 200px;
+}</style>
